@@ -1,5 +1,6 @@
 import { e } from "./dom.js"
 import { showHome } from './home.js'
+import { showEdit } from './edit.js'
 async function getMovieDetails(id) {
     var response = await fetch('http://localhost:3030/data/movies/' + id);
     var data = await response.json();
@@ -22,32 +23,33 @@ async function getOwnLikes(id) {
 
     return data;
 }
+async function deleteMovie(ev, id) {
+    ev.preventDefault();
+    var token = sessionStorage.getItem('authToken')
+    confirm("Are you sure you want to delete this movie");
+    if (confirm) {
+        var response = await fetch("http://localhost:3030/data/movies/" + id, {
+            method: 'delete',
+            headers: { 'X-Authorization': token }
+        });
+        if (response.ok) {
+            alert('Movie deleted');
+            showHome();
+        }
+    }
+
+}
 function createMovieCard(movie, likes, ownLike) {
     const controls = e('div', { className: "col-md-4 text-center" },
         e('h3', { className: 'my-3' }, 'MovieDescription'),
         e('p', {}, movie.description))
 
-    async function deleteMovie(ev, id) {
-        ev.preventDefault();
-        var token = sessionStorage.getItem('authToken')
-        confirm("Are you sure you want to delete this movie");
-        if (confirm) {
-            var response = await fetch("http://localhost:3030/data/movies/" + id, {
-                method: 'delete',
-                headers: { 'X-Authorization': token }
-            });
-            if (response.ok) {
-                alert('Movie deleted');
-                showHome();
-            }
-        }
 
-    }
     var userId = sessionStorage.getItem('userId');
     if (userId != null) {
         if (userId == movie._ownerId) {
             controls.appendChild(e('a', { className: 'btn btn-danger', onClick: (e) => deleteMovie(e, movie._id), href: "#" }, "Delete"));
-            controls.appendChild(e('a', { className: 'btn btn-warning', href: "#" }, "Edit"));
+            controls.appendChild(e('a', { className: 'btn btn-warning', onClick: () => displayEdit(movie), href: "#" }, "Edit"));
         } else if (ownLike.length == 0) {
             controls.appendChild(e('a', { className: 'btn btn-primary', onClick: likeMovie, href: "#" }, "Like"));
         }
@@ -92,7 +94,9 @@ function createMovieCard(movie, likes, ownLike) {
     };
 }
 
-
+function displayEdit(movie) {
+    showEdit(movie)
+}
 export function setupDetails(mainTarget, sectionTarget) {
     main = mainTarget;
     section = sectionTarget;
