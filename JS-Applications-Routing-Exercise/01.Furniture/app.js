@@ -6,6 +6,7 @@ import { detailsPage } from "./views/details.js";
 import { editPage } from "./views/edit.js";
 import { loginPage } from "./views/login.js";
 import { registerPage } from "./views/register.js"
+import { myFurniturePage } from "./views/myFurniture.js";
 
 page('/', decorateContext, dashboardPage)
 page('/dashboard', decorateContext, dashboardPage)
@@ -14,6 +15,7 @@ page('/create', decorateContext, createPage)
 page('/register', decorateContext, registerPage)
 page('/details/:id', decorateContext, detailsPage)
 page('/edit/:id', decorateContext, editPage)
+page('/myFurniture', decorateContext, myFurniturePage)
 page.setUserNav = setUserNav;
 const main = document.querySelector('.container')
 

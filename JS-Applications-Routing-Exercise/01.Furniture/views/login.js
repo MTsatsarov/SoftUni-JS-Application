@@ -48,7 +48,6 @@ async function onSubmit(ev) {
         sessionStorage.setItem('authToken', result.accessToken);
         sessionStorage.setItem('email', result.email);
         sessionStorage.setItem('userId', result._id)
-        console.log(sessionStorage.getItem('userId'))
         page.setUserNav();
         page.redirect('/');
     }

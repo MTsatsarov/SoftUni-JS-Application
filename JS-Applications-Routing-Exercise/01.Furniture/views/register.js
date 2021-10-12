@@ -50,7 +50,6 @@ async function onSubmit(ev) {
         alert('Password don\'t match')
     } else {
      const result =   await registerUser({ email: email, password: password })
-console.log(result)
          page.redirect('/login')
     }
 }

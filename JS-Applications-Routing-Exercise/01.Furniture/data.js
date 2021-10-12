@@ -21,17 +21,20 @@ export async function getFurnitureDetails(furnitureId) {
   return await api.get(api.host + 'data/catalog/' + furnitureId)
 }
 export async function deleteFurniture(furnitureId) {
- return await api.del(api.host + 'data/catalog/' + furnitureId)
+  return await api.del(api.host + 'data/catalog/' + furnitureId)
 }
 
 export async function getAllUserFurniture(userId) {
   return await api.get(api.host + `data/catalog?where=_ownerId%3D%22${userId}%22`);
 }
 export async function createFurniture(furniture) {
-return   await api.post(api.host + 'data/catalog', furniture)
+  return await api.post(api.host + 'data/catalog', furniture)
 }
 
-export async function updateFurniture(id,furniture) {
-  await api.put(api.host + 'data/catalog/' + id,furniture)
+export async function updateFurniture(id, furniture) {
+ return await api.put(api.host + 'data/catalog/' + id, furniture)
 }
-// ⦁	My Furniture (GET): http://localhost:3030/data/catalog
+
+export async function getMyFurniture(userId) {
+ return  await api.get(api.host + `data/catalog?where=_ownerId%3D%22${userId}%22`);
+}

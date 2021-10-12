@@ -24,18 +24,13 @@ export function createOptions(method = 'get', data) {
         method,
         headers: {}
     };
-
-    if (data) {
-
-        result.headers['Content-Type'] = 'application/json';
-        result.headers['Accept'] = "application/json; odata=verbose"
-        result.headers['X-Authorization'] = `${sessionStorage.getItem('authToken')}`
-        result.body = JSON.stringify(data);
+    const token = sessionStorage.getItem('authToken');
+    if (token != null) {
+        result.headers['X-Authorization'] = token;
     }
-    if (result.method =='delete') {
+    if (data) {
         result.headers['Content-Type'] = 'application/json';
-        result.headers['Accept'] = "application/json; odata=verbose"
-        result.headers['X-Authorization'] = `${sessionStorage.getItem('authToken')}`
+        result.body = JSON.stringify(data);
     }
     return result;
 }
